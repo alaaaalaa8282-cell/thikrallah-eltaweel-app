@@ -14,20 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 18
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '18'
           distribution: 'temurin'
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: |
-          ./gradlew assembleDebug --no-daemon \
-            -Dorg.gradle.java.installations.paths=$JAVA_HOME \
-            -Dorg.gradle.java.installations.auto-download=false
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
