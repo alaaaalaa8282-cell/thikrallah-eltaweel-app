@@ -10,7 +10,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/contactUs"
+    android:title="@string/contactUs"
+    android:visible="false"
         android:layout="@layout/preference_catagory">
         <com.HMSolutions.thikrallah.Utilities.MyPreference
             android:key="contactDevKey"
