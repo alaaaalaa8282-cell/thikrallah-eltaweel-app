@@ -43,9 +43,7 @@
   <color name="snackbar_background_color">@color/download_button_background</color>
   <color name="overlay_panel">#bb000000</color>
     <item name="transperentwhite" type="color">#33000000</item>
-    <color name="ColorPrimary">#e62117</color>
-    <color name="ColorPrimaryDark">#c31c13</color>
-    <color name="tabsScrollColor">#8a140e</color>
+    <color name="ColorPrimary">#1B6B3A</color>
 
 
 
