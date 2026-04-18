@@ -9,7 +9,7 @@
             android:title="@string/language" />
     </PreferenceCategory>
 
-    <PreferenceCategory
+  //  <PreferenceCategory
         android:visible="false"
       android:title="@string/contactUs"
         android:layout="@layout/preference_catagory">
@@ -40,6 +40,6 @@
             </intent>
         </com.HMSolutions.thikrallah.Utilities.MyPreference>
 
-    </PreferenceCategory>
+   // </PreferenceCategory>
 
 </PreferenceScreen>
