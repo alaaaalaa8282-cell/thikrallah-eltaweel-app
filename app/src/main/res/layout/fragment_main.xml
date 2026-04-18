@@ -161,6 +161,7 @@
 
             <!-- Row 5 - زر انشر الخير كامل العرض -->
             <Button
+               android:visibility="gone"
                 android:id="@+id/button_sadaqa"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
