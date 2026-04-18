@@ -25,8 +25,26 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build Release APK
-        run: ./gradlew assembleRelease --no-daemon
+      - name: Generate Keystore
+        run: |
+          keytool -genkey -v \
+            -keystore keystore.jks \
+            -alias eltaweel \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass eltaweel123 \
+            -keypass eltaweel123 \
+            -dname "CN=eltaweel, O=eltaweel, C=EG"
+
+      - name: Build Signed Release APK
+        run: |
+          ./gradlew assembleRelease \
+            -Pandroid.injected.signing.store.file=$(pwd)/keystore.jks \
+            -Pandroid.injected.signing.store.password=eltaweel123 \
+            -Pandroid.injected.signing.key.alias=eltaweel \
+            -Pandroid.injected.signing.key.password=eltaweel123 \
+            --no-daemon
 
       - name: Create Release and Upload APK
         uses: softprops/action-gh-release@v2
