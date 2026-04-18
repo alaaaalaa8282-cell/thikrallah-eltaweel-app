@@ -44,6 +44,8 @@
   <color name="overlay_panel">#bb000000</color>
     <item name="transperentwhite" type="color">#33000000</item>
     <color name="ColorPrimary">#1B6B3A</color>
+<color name="ColorPrimaryDark">#0D4A28</color>
+<color name="tabsScrollColor">#0D4A28</color>
 
 
 
