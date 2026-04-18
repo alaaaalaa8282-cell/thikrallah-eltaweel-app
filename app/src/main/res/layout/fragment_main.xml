@@ -1,15 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:fitsSystemWindows="true"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-
-    tools:context="com.HMSolutions.thikrallah.MainActivity">
+    android:background="#0D4A28">
 
     <ScrollView
         android:id="@+id/container_scroll_view"
@@ -18,128 +11,167 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <Button
-                android:id="@+id/button_my_athkar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/my_athkar"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/my_athkar"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
-                android:id="@+id/button_morning_thikr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/sun"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/morningThikr"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
-                android:id="@+id/button_night_thikr"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/moon"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/nightThikr"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
-                android:id="@+id/button_quran"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/quran"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/quranic_verses"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-
-            <Button
-                android:id="@+id/button_athan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/athan"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/athan"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Button
-                android:id="@+id/button_qibla"
+            <!-- Row 1 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/qibla"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/qibla"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/hisn_almuslim"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/button_my_athkar"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/my_athkar"
+                    android:text="@string/my_athkar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/button_morning_thikr"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/sun"
+                    android:text="@string/morningThikr"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <!-- Row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/hisn_almuslim"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/hisn_almuslim"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/button_settings"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/button_night_thikr"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/moon"
+                    android:text="@string/nightThikr"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/button_quran"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/quran"
+                    android:text="@string/quranic_verses"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <!-- Row 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
-                android:drawableTop="@drawable/settings"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
-                android:text="@string/Settings"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/button_athan"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/athan"
+                    android:text="@string/athan"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/button_qibla"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/qibla"
+                    android:text="@string/qibla"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <!-- Row 4 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/hisn_almuslim"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/hisn_almuslim"
+                    android:text="@string/hisn_almuslim"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/button_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="130dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/card_bg"
+                    android:drawableTop="@drawable/settings"
+                    android:text="@string/Settings"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+            <!-- Row 5 - زر انشر الخير كامل العرض -->
             <Button
                 android:id="@+id/button_sadaqa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/card_bg"
                 android:drawableTop="@drawable/share_button"
-                android:ellipsize="none"
-                android:scrollHorizontally="false"
                 android:text="@string/sadaqa"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:padding="10dp" />
 
         </LinearLayout>
     </ScrollView>
