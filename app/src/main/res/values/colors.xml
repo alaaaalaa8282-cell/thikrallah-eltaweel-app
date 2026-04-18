@@ -4,8 +4,8 @@
   <color name="accent_color_dark">@color/color_control_normal</color>
   <color name="color_control_activated">@color/accent_color</color>
   <color name="color_control_normal">#89b2dfdb</color>
-  <color name="page_background">#FFF4CB</color>
-  <color name="header_background">#ff424242</color>
+  <color name="page_background">#F5F5F5</color>
+<color name="header_background">#0D4A28</color>
   <color name="ripple_dark">#33ffffff</color>
   <color name="header_text_color">@color/sura_number_color</color>
   <color name="title_color">#ffffffff</color>
