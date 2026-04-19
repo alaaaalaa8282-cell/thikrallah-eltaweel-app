@@ -568,8 +568,9 @@ public class ThikrMediaPlayerService extends Service implements OnCompletionList
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         boolean isGradual = sharedPrefs.getBoolean("gradual_volume", true);
         if (getThikrType().contains(MainActivity.DATA_TYPE_ATHAN)) {
-
-            if (isGradual) {
+        am.setStreamVolume(AudioManager.STREAM_MUSIC, 
+       am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+        if (isGradual) {
                 fadeDuration = 10000;
             }
         }
