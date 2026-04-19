@@ -206,7 +206,20 @@ public class ThikrMediaPlayerService extends Service implements OnCompletionList
         }
         Timber.d( "oncreate called");
         initMediaPlayer();
-
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+      tm.listen(new PhoneStateListener() {
+    @Override
+    public void onCallStateChanged(int state, String phoneNumber) {
+        if (state == TelephonyManager.CALL_STATE_RINGING ||
+            state == TelephonyManager.CALL_STATE_OFFHOOK) {
+            if (player != null && player.isPlaying()) {
+                player.stop();
+                stopSelf();
+            }
+        }
+    }
+}, PhoneStateListener.LISTEN_CALL_STATE);
+            
         //below is wip
         //initNotification();
 
