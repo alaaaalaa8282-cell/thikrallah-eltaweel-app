@@ -60,6 +60,8 @@ import static android.support.v4.media.MediaMetadataCompat.Builder;
 
 import timber.log.Timber;
 
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager; 
 
 public class ThikrMediaPlayerService extends Service implements OnCompletionListener,
         AudioManager.OnAudioFocusChangeListener {
