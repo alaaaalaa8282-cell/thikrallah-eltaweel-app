@@ -28,6 +28,9 @@
 
     <style name="AppTheme.Preference" parent="AppTheme.Base">
         <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">#0D4A28</item>
+        <item name="android:textColorSecondary">#0D4A28</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
     <style name="TitleText">
@@ -43,7 +46,10 @@
         parent="android:TextAppearance.StatusBar.EventContent" />
 
     <style name="NotificationTitle"
-        parent="android:TextAppearance.StatusBar.EventContent.Title" />
+        parent="android:TextAppearance.StatusBar.EventContent.Title">
+        <item name="android:textColor">#FFD700</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <style name="TranslationText">
         <item name="android:textColor">#FFFFFF</item>
