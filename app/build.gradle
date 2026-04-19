@@ -30,7 +30,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId "com.alaa.thikrallah"
+        applicationId "com.HMSolutions.thikrallah"
         minSdkVersion 21
         targetSdkVersion 36
         versionCode 152
@@ -52,7 +52,7 @@ android {
         checkReleaseBuilds = false
         disable 'MissingTranslation'
     }
-    namespace = 'com.alaa.thikrallah'
+    namespace = 'com.HMSolutions.thikrallah'
     buildFeatures {
         buildConfig = true
     }
