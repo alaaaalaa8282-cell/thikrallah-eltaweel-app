@@ -11,9 +11,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:enabled="false"
         android:title="@string/contactUs"
-        android:enabled="false"
         android:layout="@layout/preference_catagory">
         <com.HMSolutions.thikrallah.Utilities.MyPreference
             android:key="contactDevKey"
@@ -21,7 +19,6 @@
             android:selectable="false"
             android:title="@string/email_Us">
             <intent
-             android:enabled="false"
                 android:action="android.intent.action.VIEW"
                 android:data="@string/contact_developer_uri" />
         </com.HMSolutions.thikrallah.Utilities.MyPreference>
@@ -31,8 +28,7 @@
             android:selectable="false"
             android:title="@string/help_translate">
             <intent
-             android:enabled="false"
-               android:action="android.intent.action.VIEW"
+                android:action="android.intent.action.VIEW"
                 android:data="@string/translation_link" />
         </com.HMSolutions.thikrallah.Utilities.MyPreference>
         <com.HMSolutions.thikrallah.Utilities.MyPreference
