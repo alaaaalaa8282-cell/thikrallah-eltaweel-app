@@ -30,7 +30,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId "com.HMSolutions.thikrallah"
+        applicationId "com.HMSolutions.thikrallah.alaa"
         minSdkVersion 21
         targetSdkVersion 36
         versionCode 152
