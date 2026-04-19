@@ -4,6 +4,7 @@
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowBackground">#0D4A28</item>
     </style>
 
     <style name="Divider">
