@@ -999,21 +999,22 @@ public class ThikrMediaPlayerService extends Service implements OnCompletionList
     }
 
     private void setVolume() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        boolean isGradual = sharedPrefs.getBoolean("gradual_volume", true);
-        if (!this.getThikrType().contains(MainActivity.DATA_TYPE_ATHAN) || !isGradual) {
-            Timber.d( "setVolume 1");
-            int volumeLevel = sharedPrefs.getInt("volume", 100);
-            int maxVolume = 101;
-            float volume = (float) (1 - Math.log(maxVolume - volumeLevel) / Math.log(maxVolume));
-            player.setVolume(volume, volume);
-
-        } else {
+    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+    boolean isGradual = sharedPrefs.getBoolean("gradual_volume", true);
+    if (this.getThikrType().contains(MainActivity.DATA_TYPE_ATHAN)) {
+        if (isGradual) {
             incrementVolume();
-            Timber.d( "setVolume 3");
+        } else {
+            player.setVolume(1f, 1f);
         }
+        return;
     }
-
+    Timber.d("setVolume - thikr only");
+    int volumeLevel = sharedPrefs.getInt("volume", 100);
+    int maxVolume = 101;
+    float volume = (float) (1 - Math.log(maxVolume - volumeLevel) / Math.log(maxVolume));
+    player.setVolume(volume, volume);
+}
     private void startPlayerIfAllowed() {
         Timber.d( "startPlayerIfAllowed called");
         //TODO:WHY IS AUDIOFOCUS REQUEST DENIED AFTER PHONE CALL FINISHES IF THE SERVICE STARTS DURING A CALL?
