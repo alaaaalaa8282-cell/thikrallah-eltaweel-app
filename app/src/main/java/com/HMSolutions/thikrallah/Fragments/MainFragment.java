@@ -122,17 +122,21 @@ mCallback.launchFragment(new ThikrFragment(), data, "ThikrFragment");
 
     }
 	private void requestBatteryExclusion(Context mContext) {
-		//first time launch, request is made in tutorial fragment, do not request here:
-		if (!mPrefs.getBoolean("isFirstLaunch", true)) {
-			mCallback.requestOverLayPermission();
-			mCallback.requestNotificationPermission();
-			mCallback.requestBatteryExclusion();
-			mCallback.requestExactAlarmPermission();
-			mCallback.requestLocationPermission();
-			if (mPrefs.getBoolean("isMediaPermissionNeeded",false)){
-				mCallback.requestMediaOrStoragePermission();
-			}
-		}
+    //first time launch, request is made in tutorial fragment, do not re...
+    if (!mPrefs.getBoolean("isFirstLaunch", true)
+            && !mPrefs.getBoolean("permissionsRequested", false)) {
 
+        mPrefs.edit().putBoolean("permissionsRequested", true).apply();
+
+        mCallback.requestOverLayPermission();
+        mCallback.requestNotificationPermission();
+        mCallback.requestBatteryExclusion();
+        mCallback.requestExactAlarmPermission();
+        mCallback.requestLocationPermission();
+        if (mPrefs.getBoolean("isMediaPermissionNeeded", false)){
+            mCallback.requestMediaOrStoragePermission();
+        }
+    }
+}
 	}
 }
