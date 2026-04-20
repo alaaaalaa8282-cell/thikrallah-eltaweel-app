@@ -139,4 +139,4 @@ mCallback.launchFragment(new ThikrFragment(), data, "ThikrFragment");
     }
 }
 	}
-}
+
