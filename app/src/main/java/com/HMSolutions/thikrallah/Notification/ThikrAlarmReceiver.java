@@ -5,23 +5,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+
 public class ThikrAlarmReceiver extends BroadcastReceiver {
     String TAG = "ThikrAlarmReceiver";
-   @Override
-   public void onReceive(Context context, Intent intent) {
-	   Log.d(TAG,"onrecieve called");
-       Bundle data=intent.getExtras();
-       data.putBoolean("isUserAction",false);
-	   Intent intent2=new Intent(context, ThikrService.class).putExtras(data);
-       //startWakefulService(context,intent2);
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-           Log.d(TAG,"starting foreground service ThikrService");
-           context.startForegroundService(intent2);
-       } else {
-           Log.d(TAG,"starting background service ThikrService");
-           context.startService(intent2);
-       }
-      
-   }
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG,"onrecieve called");
+
+        // لا تشغل الأذكار الصوتية أثناء المكالمات
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (tm != null && tm.getCallState() != TelephonyManager.CALL_STATE_IDLE) {
+            Log.d(TAG, "Call in progress, skipping thikr");
+            return;
+        }
+
+        Bundle data=intent.getExtras();
+        data.putBoolean("isUserAction",false);
+        //startWakefulService(context,intent2);
+        Intent intent2=new Intent(context, ThikrService.class).putExtras(data);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d(TAG,"starting foreground service ThikrService");
+            context.startForegroundService(intent2);
+        } else {
+            Log.d(TAG,"starting background service ThikrService");
+            context.startService(intent2);
+        }
+
+    }
+
 }
