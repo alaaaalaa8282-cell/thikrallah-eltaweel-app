@@ -1,4 +1,4 @@
-package com.HMSolutions.thikrallah.Notification;
+package com.alaaeltaweel.thikrallah.Notification;
 
 
 import android.app.IntentService;
@@ -21,32 +21,33 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.HMSolutions.thikrallah.BuildConfig;
-import com.HMSolutions.thikrallah.MainActivity;
-import com.HMSolutions.thikrallah.Models.UserThikr;
-import com.HMSolutions.thikrallah.R;
-import com.HMSolutions.thikrallah.ThikrMediaPlayerService;
-import com.HMSolutions.thikrallah.Utilities.MyDBHelper;
-import com.HMSolutions.thikrallah.Utilities.PrayTime;
-import com.HMSolutions.thikrallah.quran.data.page.provider.madani.MadaniPageProvider;
-import com.HMSolutions.thikrallah.quran.data.source.PageProvider;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.common.QariItem;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.dao.audio.AudioPathInfo;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.dao.audio.AudioRequest;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.data.Constants;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.data.SuraAyah;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.service.AudioService;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.service.QuranDownloadService;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.service.util.ServiceIntentHelper;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.ui.PagerActivity;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.util.AudioUtils;
-import com.HMSolutions.thikrallah.quran.labs.androidquran.util.QuranSettings;
+import com.alaaeltaweel.thikrallah.BuildConfig;
+import com.alaaeltaweel.thikrallah.MainActivity;
+import com.alaaeltaweel.thikrallah.Models.UserThikr;
+import com.alaaeltaweel.thikrallah.R;
+import com.alaaeltaweel.thikrallah.ThikrMediaPlayerService;
+import com.alaaeltaweel.thikrallah.Utilities.MyDBHelper;
+import com.alaaeltaweel.thikrallah.Utilities.PrayTime;
+import com.alaaeltaweel.thikrallah.quran.data.page.provider.madani.MadaniPageProvider;
+import com.alaaeltaweel.thikrallah.quran.data.source.PageProvider;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.common.QariItem;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.dao.audio.AudioPathInfo;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.dao.audio.AudioRequest;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.data.Constants;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.data.SuraAyah;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.service.AudioService;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.service.QuranDownloadService;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.service.util.ServiceIntentHelper;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.ui.PagerActivity;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.util.AudioUtils;
+import com.alaaeltaweel.thikrallah.quran.labs.androidquran.util.QuranSettings;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -84,6 +85,17 @@ public class ThikrService extends IntentService  {
 		super("service");
 	}
 
+	// ✅ التحقق من وجود مكالمة هاتفية
+    private boolean isInCall() {
+        try {
+            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            return tm != null && tm.getCallState() != TelephonyManager.CALL_STATE_IDLE;
+        } catch (SecurityException e) {
+            Log.d(TAG, "READ_PHONE_STATE permission not granted, assuming no call");
+            return false;
+        }
+    }
+
 	@Override
 	protected void onHandleIntent(Intent intent) {
 
@@ -96,7 +108,7 @@ public class ThikrService extends IntentService  {
         mcontext=this.getApplicationContext();
         quransettings=QuranSettings.getInstance(mcontext);
         //update all alarms
-        Intent boot_reciever = new Intent("com.HMSolutions.thikrallah.Notification.ThikrBootReceiver.android.action.broadcast");
+        Intent boot_reciever = new Intent("com.alaaeltaweel.thikrallah.Notification.ThikrBootReceiver.android.action.broadcast");
         this.sendBroadcast(boot_reciever);
         Log.d(TAG,"onhandleintnet called");
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
@@ -124,7 +136,7 @@ public class ThikrService extends IntentService  {
         am = (AudioManager) this.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 		Bundle data=intent.getExtras();
 		String thikrType="";
-		thikrType=data.getString("com.HMSolutions.thikrallah.datatype");
+		thikrType=data.getString("com.alaaeltaweel.thikrallah.datatype");
 		if (thikrType.equals(MainActivity.DATA_TYPE_GENERAL_THIKR)){
             MyDBHelper db = new MyDBHelper(this);
             UserThikr thikr=db.getRandomThikr();
@@ -167,7 +179,8 @@ public class ThikrService extends IntentService  {
 
 			boolean isQuietTime=isTimeNowQuietTime();
 			if (((reminderType==1 ||reminderType==2)&&isQuietTime==false&&(thikr.isBuiltIn()==true||thikr.getFile().length()>2))){
-                sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", MainActivity.DATA_TYPE_GENERAL_THIKR).apply();
+			    if (!isInCall()) {
+                sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", MainActivity.DATA_TYPE_GENERAL_THIKR).apply();
                 data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAY);
                 Log.d(TAG,"fileNumber sent through intent is "+fileNumber);
                 data.putInt("FILE", fileNumber);
@@ -177,7 +190,9 @@ public class ThikrService extends IntentService  {
                 } else {
                     this.startService(new Intent(this, ThikrMediaPlayerService.class).putExtras(data));
                 }
-
+                } else {
+                    Log.d(TAG, "Call in progress, skipping general thikr audio");
+                }
 			}
             return;
 
@@ -221,14 +236,17 @@ public class ThikrService extends IntentService  {
                 mNotificationManager.notify(NOTIFICATION_ID_MORNING_NIGHT_THIKR, mBuilder.build());
 			}else{
 				//new here
-
-				sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", MainActivity.DATA_TYPE_DAY_THIKR).apply();
+				if (!isInCall()) {
+				sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", MainActivity.DATA_TYPE_DAY_THIKR).apply();
 
 				data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAYALL);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     this.startForegroundService(new Intent(this, ThikrMediaPlayerService.class).putExtras(data));
                 } else {
                     this.startService(new Intent(this, ThikrMediaPlayerService.class).putExtras(data));
+                }
+                } else {
+                    Log.d(TAG, "Call in progress, skipping day thikr audio");
                 }
 			}
             return;
@@ -269,15 +287,17 @@ public class ThikrService extends IntentService  {
                 }
                 mNotificationManager.notify(NOTIFICATION_ID_MORNING_NIGHT_THIKR, mBuilder.build());
 			}else{
-
-				sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", MainActivity.DATA_TYPE_NIGHT_THIKR).apply();
+				if (!isInCall()) {
+				sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", MainActivity.DATA_TYPE_NIGHT_THIKR).apply();
 				data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAYALL);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     this.startForegroundService(new Intent(this, ThikrMediaPlayerService.class).putExtras(data));
                 } else {
                     this.startService(new Intent(this, ThikrMediaPlayerService.class).putExtras(data));
                 }
-
+                } else {
+                    Log.d(TAG, "Call in progress, skipping night thikr audio");
+                }
 			}
             return;
 
@@ -324,7 +344,7 @@ public class ThikrService extends IntentService  {
             }else{
                 //new here
                 Log.d(TAG,"Quran Mulk audio reminder");
-                sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", MainActivity.DATA_TYPE_QURAN_MULK).apply();
+                sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", MainActivity.DATA_TYPE_QURAN_MULK).apply();
 
                 data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAYALL);
                 SuraAyah start = new SuraAyah(67, 1);
@@ -363,7 +383,11 @@ public class ThikrService extends IntentService  {
                         Timber.tag(TAG).d("DownloadIntents are " + DownloadIntents.size());
                         if (DownloadIntents.size()==0){
                             Timber.d("calling handlePlayback");
-                            handlePlayback(audioRequest);
+                            if (!isInCall()) {
+                                handlePlayback(audioRequest);
+                            } else {
+                                Log.d(TAG, "Call in progress, skipping Mulk audio");
+                            }
                         }else{
                             Log.d(TAG,"Quran Mulk audio reminder. Need to download files");
                             Intent RecieverIntent_=new Intent(mcontext, QuranThikrDownloadNeeds.class);
@@ -459,7 +483,7 @@ public class ThikrService extends IntentService  {
                 mNotificationManager.notify(NOTIFICATION_ID_QURAN_THIKR, mBuilder.build());
             }else{
 
-                sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", MainActivity.DATA_TYPE_QURAN_MULK).apply();
+                sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", MainActivity.DATA_TYPE_QURAN_MULK).apply();
 
                 data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAYALL);
                 SuraAyah start = new SuraAyah(18, 1);
@@ -500,7 +524,11 @@ public class ThikrService extends IntentService  {
                         Timber.tag(TAG).d("DownloadIntents are " + DownloadIntents.size());
                         if (DownloadIntents.size()==0){
                             Timber.d("calling handlePlayback");
-                            handlePlayback(audioRequest);
+                            if (!isInCall()) {
+                                handlePlayback(audioRequest);
+                            } else {
+                                Log.d(TAG, "Call in progress, skipping Kahf audio");
+                            }
                         }else{
                             Intent RecieverIntent_=new Intent(mcontext, QuranThikrDownloadNeeds.class);
                             RecieverIntent_.putExtra("sura",start.sura);
@@ -586,9 +614,9 @@ public class ThikrService extends IntentService  {
                 vibrate();
 
             } else {
-                if (reminderType != 1) {
+                if (reminderType != 1 && !isInCall()) {
                     //starting audioservice
-                    sharedPrefs.edit().putString("com.HMSolutions.thikrallah.datatype", thikrType).apply();
+                    sharedPrefs.edit().putString("com.alaaeltaweel.thikrallah.datatype", thikrType).apply();
                     data.putInt("ACTION", ThikrMediaPlayerService.MEDIA_PLAYER_PLAY);
                     int file = reminderType;
                     Log.d(TAG, "fileNumber sent through intent is " + file);
@@ -635,7 +663,7 @@ public class ThikrService extends IntentService  {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String NOTIFICATION_CHANNEL_ID = "com.HMSolutions.thikrallah.Notification.DownloadQuran";
+            String NOTIFICATION_CHANNEL_ID = "com.alaaeltaweel.thikrallah.Notification.DownloadQuran";
             String channelName = this.getResources().getString(R.string.notification_channel_download);
 
             NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
@@ -808,14 +836,14 @@ public class ThikrService extends IntentService  {
         }
 
         StringBuilder builder = new StringBuilder();
-        String[] suraNames = context.getResources().getStringArray(com.HMSolutions.thikrallah.R.array.sura_names);
+        String[] suraNames = context.getResources().getStringArray(com.alaaeltaweel.thikrallah.R.array.sura_names);
         if (wantPrefix) {
-            builder.append(context.getString(com.HMSolutions.thikrallah.R.string.quran_sura_title, suraNames[sura - 1]));
+            builder.append(context.getString(com.alaaeltaweel.thikrallah.R.string.quran_sura_title, suraNames[sura - 1]));
         } else {
             builder.append(suraNames[sura - 1]);
         }
         if (wantTranslation) {
-            String translation = context.getResources().getStringArray(com.HMSolutions.thikrallah.R.array.sura_names_translation)[sura - 1];
+            String translation = context.getResources().getStringArray(com.alaaeltaweel.thikrallah.R.array.sura_names_translation)[sura - 1];
             if (!TextUtils.isEmpty(translation)) {
                 // Some sura names may not have translation
                 builder.append(" (");
